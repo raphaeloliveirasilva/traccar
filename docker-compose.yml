@@ -1,5 +1,7 @@
 version: "3.3"
+
 services:
+
   traccar:
     container_name: traccar
     image: traccar/traccar:5.12-ubuntu
@@ -14,7 +16,6 @@ services:
     volumes:
       - ./logs:/opt/traccar/logs:rw
       - ./conf/traccar.xml:/opt/traccar/conf/traccar.xml:ro
-   
     depends_on:
       - mysql
     networks:
