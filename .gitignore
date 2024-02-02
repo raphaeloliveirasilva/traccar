@@ -1,3 +1,4 @@
-data
+conf/traccar.xml
 logs
-conf
+mysql
+data
