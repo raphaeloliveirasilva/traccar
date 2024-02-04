@@ -8,24 +8,19 @@ services:
     restart: unless-stopped
     ports:
       - "8082"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.traccar.tls=true"
-      - "traefik.http.routers.traccar.tls.certresolver=myresolver"
-      - "traefik.http.routers.traccar.rule=Host(`traccar.genialrastreamento.com.br`)"
     volumes:
-      - ./logs:/opt/traccar/logs:rw
+      - ./logs:/opt/traccar/logs
       - ./conf/traccar.xml:/opt/traccar/conf/traccar.xml:ro
     depends_on:
       - mysql
     networks:
-      - "traefik"
+      - "nginx"
       - "mysql"
 
   mysql:
     container_name: mysql
     image: 'mysql:latest'
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: 'traccar'
       MYSQL_PASSWORD: 'traccar'
@@ -34,12 +29,15 @@ services:
     ports:
       - "3306"
     volumes:
-      - ./mysql/data:/var/lib/mysql:rw
+      - ./mysql/data:/var/lib/mysql
     networks:
       - mysql
 
 networks:
-  traefik:
+  nginx:
     external: true
   mysql:
     external: true
+
+
+
